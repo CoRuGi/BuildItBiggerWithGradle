@@ -9,6 +9,7 @@ package com.androidnanodegree.cr.builditbigger.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.udacity.gradle.javaJokes.JokeTeller;
 
 import javax.inject.Named;
 
@@ -24,6 +25,16 @@ import javax.inject.Named;
 )
 public class MyEndpoint {
 
+    @ApiMethod(name = "tellMeAJoke")
+    public MyBean tellMeAJoke() {
+        MyBean response = new MyBean();
+
+        JokeTeller jokeTeller = new JokeTeller();
+        response.setData(jokeTeller.tellMeAJoke());
+
+        return response;
+    }
+
     /** A simple endpoint method that takes a name and says Hi back */
     @ApiMethod(name = "sayHi")
     public MyBean sayHi(@Named("name") String name) {
@@ -32,5 +43,4 @@ public class MyEndpoint {
 
         return response;
     }
-
 }
