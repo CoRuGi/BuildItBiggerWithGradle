@@ -1,1 +1,1 @@
-include ':app', ':javajokes'
+include ':javajokes', ':app'
