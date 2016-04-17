@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">JokePresenter</string>
     <string name="title_activity_joke_presenter">JokePresenter</string>
+    <string name="joke_intro">Please laugh at the following joke:</string>
 </resources>
