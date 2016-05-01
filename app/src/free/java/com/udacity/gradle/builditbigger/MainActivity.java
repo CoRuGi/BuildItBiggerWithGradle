@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.androidnanodegree.cr.jokepresenter.JokePresenter;
 import com.google.android.gms.ads.AdListener;
@@ -63,6 +64,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view){
+        MainActivityFragment mainActivityFragment =
+                (MainActivityFragment) getSupportFragmentManager().findFragmentByTag(
+                        getString(R.string.main_activity_fragment_tag)
+                );
+        mainActivityFragment.spinner.setVisibility(View.VISIBLE);
+
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         } else {

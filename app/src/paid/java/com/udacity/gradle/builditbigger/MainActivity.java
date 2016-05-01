@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -41,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view){
-//        JokeTeller jokeTeller = new JokeTeller();
-//        Intent intent = new Intent(this, JokePresenter.class);
-//        intent.putExtra(JokePresenter.newJoke, jokeTeller.tellMeAJoke());
-//        startActivity(intent);
+        MainActivityFragment mainActivityFragment =
+                (MainActivityFragment) getSupportFragmentManager().findFragmentByTag(
+                        getString(R.string.main_activity_fragment_tag)
+                );
+        mainActivityFragment.spinner.setVisibility(View.VISIBLE);
 
         new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "MisterX"));
     }

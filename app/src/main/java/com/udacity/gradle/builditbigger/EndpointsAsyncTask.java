@@ -1,9 +1,14 @@
 package com.udacity.gradle.builditbigger;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.util.Pair;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.androidnanodegree.cr.builditbigger.backend.myApi.MyApi;
@@ -51,6 +56,13 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
 
     @Override
     protected void onPostExecute(String result) {
+        MainActivity mainActivity = (MainActivity) context;
+        MainActivityFragment mainActivityFragment =
+                (MainActivityFragment) mainActivity.getSupportFragmentManager().findFragmentByTag(
+                        context.getString(R.string.main_activity_fragment_tag)
+                );
+        mainActivityFragment.spinner.setVisibility(View.GONE);
+
         Intent intent = new Intent(context, JokePresenter.class);
         intent.putExtra(JokePresenter.newJoke, result);
         context.startActivity(intent);
