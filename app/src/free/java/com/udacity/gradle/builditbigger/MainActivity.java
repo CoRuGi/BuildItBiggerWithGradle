@@ -10,15 +10,33 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.androidnanodegree.cr.jokepresenter.JokePresenter;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.udacity.gradle.javaJokes.JokeTeller;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    public InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                getNewJoke();
+            }
+        });
+
+        requestNewInterstitial();
     }
 
 
@@ -45,13 +63,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view){
-//        JokeTeller jokeTeller = new JokeTeller();
-//        Intent intent = new Intent(this, JokePresenter.class);
-//        intent.putExtra(JokePresenter.newJoke, jokeTeller.tellMeAJoke());
-//        startActivity(intent);
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            getNewJoke();
+        }
+    }
 
+    public void getNewJoke(){
         new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "MisterX"));
     }
 
+    public void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
 
 }
